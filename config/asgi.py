@@ -8,7 +8,7 @@ from . import settings
 
 
 def get_asgi_application() -> ASGIApp:
-    app_name: str = "App name"
+    app_name: str = "SphereHub"
     swagger_docs_url: str | None = None
     redoc_url: str | None = None
 
