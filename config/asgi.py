@@ -6,6 +6,8 @@ from starlette.types import ASGIApp
 
 from . import settings
 
+from src.shared.domain.exceptions import MissingAPIRouterException
+
 
 def get_asgi_application() -> ASGIApp:
     app_name: str = "SphereHub"
@@ -32,7 +34,9 @@ def get_asgi_application() -> ASGIApp:
 
 
 def _startup_event() -> None:
-    pass
+    # start orm mappers
+    from src.shared.adapters.orm_mappers import start_sqlalchemy_mappers
+    start_sqlalchemy_mappers()
 
 
 def _set_urls(app: ASGIApp) -> None:
@@ -40,7 +44,7 @@ def _set_urls(app: ASGIApp) -> None:
         app_urls = importlib.import_module(f"src.{_app}.adapters.api.views")
 
         if not hasattr(app_urls, "router"):
-            raise Exception("missing api router")
+            raise MissingAPIRouterException("missing api router")
 
         app_name: str | None = getattr(app_urls, "app_name", _app)
         app.include_router(app_urls.router, prefix=f"/{app_name}", tags=[app_name])
