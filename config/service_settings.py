@@ -28,3 +28,4 @@ DB_PORT: str = os.environ.get("DB_PORT", "5432")
 DB_PASSWORD: str = os.environ.get("DB_PASSWORD")
 
 DATABASE_URL: str = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DATABASE_URL_ASYNC: str = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
